@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.14.0"
+    "@prisma/client": "^5.14.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1"
   },
   "exports": {
     "./client": "./index.ts"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
