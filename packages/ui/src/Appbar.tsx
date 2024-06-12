@@ -10,7 +10,7 @@ interface AppbarProps {
 
 export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {
   return (
-    <div className="flex justify-between border-b px-4">
+    <div className="flex justify-between border-b px-4 border-slate-300">
       <div className="text-lg flex flex-col justify-center">
         Vanzz Payment App
       </div>
