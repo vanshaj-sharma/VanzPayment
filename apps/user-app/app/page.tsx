@@ -5,7 +5,8 @@ export default function Page(): JSX.Element {
   const session = useSession();
   return (
     <>
-      <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user} />
+      <div>hello there from page</div>
+      {/* <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user} /> */}
     </>
   );
 }
