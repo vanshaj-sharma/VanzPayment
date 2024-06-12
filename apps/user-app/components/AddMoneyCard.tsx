@@ -4,6 +4,7 @@ import { Card } from "@repo/ui/card";
 import { Select } from "@repo/ui/select";
 import { TextInput } from "@repo/ui/textinput";
 import { useState } from "react";
+import { createOnRampTransaction } from "../app/lib/actions/createOnrampTransaction";
 
 const SUPPORTED_BANKS = [
   {
@@ -20,15 +21,28 @@ export const AddMoneyCard = () => {
   const [redirectUrl, setRedirectUrl] = useState(
     SUPPORTED_BANKS[0]?.redirectUrl
   );
+  const [amount, setAmount] = useState(0);
+  const [provider, setProvider] = useState(
+    SUPPORTED_BANKS[0]?.redirectUrl || ""
+  );
   return (
     <Card title={"Amount"}>
       <div className="w-full">
-        <TextInput placeholder="Amount" label="Amount" onChange={() => {}} />
+        <TextInput
+          placeholder="Amount"
+          label="Amount"
+          onChange={(value) => {
+            setAmount(Number(value));
+          }}
+        />
       </div>
       <div className="py-4 text-left">Bank</div>
       <Select
         onSelect={(value) => {
           setRedirectUrl(
+            SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
+          );
+          setProvider(
             SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
           );
         }}
@@ -40,7 +54,8 @@ export const AddMoneyCard = () => {
 
       <div className="flex justify-center pt-4">
         <Button
-          onClick={() => {
+          onClick={async () => {
+            await createOnRampTransaction(amount * 100, provider);
             window.location.href = redirectUrl || "";
           }}
         >
