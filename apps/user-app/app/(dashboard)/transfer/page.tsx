@@ -10,13 +10,14 @@ const getBalance = async () => {
   const session = await getServerSession(authOptions);
   const balance = await prisma.balance.findFirst({
     where: {
-      userId: session?.user?.id,
+      userId: Number(session?.user?.id),
     },
   });
 
   return {
-    amount: balance?.amount,
-    locked: balance?.locked,
+    // || 0 to remove type errors
+    amount: balance?.amount || 0,
+    locked: balance?.locked || 0,
   };
 };
 
@@ -51,7 +52,7 @@ export default async function () {
         <div>
           <BalanceCard amount={balance.amount} locked={balance.locked} />
           <div className="pt-4">
-            <OnRampTransactions transactions={transactions} />
+            <OnRampTransaction transactions={transactions} />
           </div>
         </div>
       </div>

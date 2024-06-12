@@ -11,8 +11,9 @@ export const authOptions = {
           label: "Phone Number",
           type: "text",
           placeholder: "Enter Phone number here",
+          required: true,
         },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password", required: true },
       },
       //TODO: User credetials type from next-auth
       async authorize(credentials: any) {
@@ -30,8 +31,9 @@ export const authOptions = {
         });
 
         if (existingUser) {
+          //you want to check the password as plain text!!
           const passwordValidation = await bcrypt.compare(
-            hashedPassword,
+            credentials.password,
             existingUser.password
           );
           if (passwordValidation) {
