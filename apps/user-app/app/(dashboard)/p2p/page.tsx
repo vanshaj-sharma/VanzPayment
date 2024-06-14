@@ -20,7 +20,7 @@ const getBalance = async () => {
     locked: balance?.locked || 0,
   };
 };
-
+//TODO: Optimize the below txns
 //function to get p2p txns
 const getSentP2pTransactions = async () => {
   const session = await getServerSession(authOptions);

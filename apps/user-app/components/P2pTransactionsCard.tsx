@@ -19,19 +19,31 @@ export const P2pTransactionsCard = ({
   }
   return (
     <Card title="Recent P2P Transaction">
-      {transactions.map((t) => (
-        <div className="flex justify-between">
-          <div>
-            <div className="text-sm">{/* add received or sent */}</div>
-            <div className="text-slate-600 text-xs">
-              {t.time.toDateString()}
-            </div>
-            <div className="flex flex-col justify-center">
-              - Rs {t.amount / 100}
+      {transactions.map((t) =>
+        t.senderId ? (
+          // received money here
+          <div className="flex justify-between text-green-600">
+            <div>
+              <div className="text-sm">Received INR </div>
+              <div className=" text-xs">{t.time.toDateString()}</div>
+              <div className="flex flex-col justify-center ">
+                + Rs {t.amount / 100}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ) : (
+          // sent amount here
+          <div className="flex justify-between text-red-600">
+            <div>
+              <div className="text-sm">Sent INR</div>
+              <div className=" text-xs">{t.time.toDateString()}</div>
+              <div className="flex flex-col justify-center ">
+                - Rs {t.amount / 100}
+              </div>
+            </div>
+          </div>
+        )
+      )}
     </Card>
   );
 };
