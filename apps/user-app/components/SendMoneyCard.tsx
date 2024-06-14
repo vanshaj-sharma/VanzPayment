@@ -4,7 +4,6 @@ import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
 import { TextInput } from "@repo/ui/textinput";
 import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
-
 export const SendMoneyCard = () => {
   const [phoneno, setPhoneno] = useState("");
   const [amount, setAmount] = useState("");
