@@ -60,5 +60,14 @@ export async function p2pTransfer(to: string, amount: number) {
         },
       },
     });
+
+    await txn.p2pTransfer.create({
+      data: {
+        amount: amount,
+        timestamp: new Date(),
+        fromUserId: Number(from),
+        toUserId: toUser.id,
+      },
+    });
   });
 }
