@@ -33,11 +33,13 @@ const getAllP2pTransactions = async () => {
   });
 
   const allTransactions: {
+    id: number;
     time: Date;
     amount: number;
     senderId?: number;
     receiverId?: number;
   }[] = transactions.map((t) => ({
+    id: t.id,
     time: t.timestamp,
     amount: t.amount,
     // if fromId = user then it is a received txn

@@ -4,6 +4,7 @@ export const P2pTransactionsCard = ({
   transactions,
 }: {
   transactions: {
+    id: number;
     time: Date;
     amount: number;
     senderId?: number | null;
@@ -22,7 +23,7 @@ export const P2pTransactionsCard = ({
       {transactions.slice(0, 10).map((t) =>
         t.senderId != undefined ? (
           // received money here
-          <div className="flex justify-between text-green-600 pb-1">
+          <div key={t.id} className="flex justify-between text-green-600 pb-1">
             <div>
               <div className="text-sm">Received INR </div>
               <div className=" text-xs">
@@ -41,7 +42,7 @@ export const P2pTransactionsCard = ({
           </div>
         ) : (
           // sent amount here
-          <div className="flex justify-between text-red-600 pb-1">
+          <div key={t.id} className="flex justify-between text-red-600 pb-1">
             <div>
               <div className="text-sm">Sent INR</div>
               <div className=" text-xs">
