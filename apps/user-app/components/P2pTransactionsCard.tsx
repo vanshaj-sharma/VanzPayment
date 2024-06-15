@@ -6,8 +6,8 @@ export const P2pTransactionsCard = ({
   transactions: {
     time: Date;
     amount: number;
-    senderId?: number;
-    receiverId?: number;
+    senderId?: number | null;
+    receiverId?: number | null;
   }[];
 }) => {
   if (!transactions || transactions.length === 0) {
@@ -20,7 +20,7 @@ export const P2pTransactionsCard = ({
   return (
     <Card title="Recent P2P Transaction">
       {transactions.map((t) =>
-        t.senderId ? (
+        t.senderId != undefined ? (
           // received money here
           <div className="flex justify-between text-green-600">
             <div>

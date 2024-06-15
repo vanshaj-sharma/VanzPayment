@@ -20,52 +20,38 @@ const getBalance = async () => {
     locked: balance?.locked || 0,
   };
 };
-//TODO: Optimize the below txns
+
 //function to get p2p txns
-const getSentP2pTransactions = async () => {
+const getAllP2pTransactions = async () => {
   const session = await getServerSession(authOptions);
-
-  const sentTxns = await prisma.p2pTransfer.findMany({
+  const userId = Number(session?.user?.id);
+  const transactions = await prisma.p2pTransfer.findMany({
     where: {
-      fromUserId: Number(session?.user?.id),
+      OR: [{ fromUserId: userId }, { toUserId: userId }],
     },
   });
 
-  return sentTxns.map((t) => ({
-    time: t.timestamp,
-    amount: t.amount,
-    receiverId: t.toUserId,
-  }));
-};
-
-const getReceivedP2pTransactions = async () => {
-  const session = await getServerSession(authOptions);
-
-  const receivedTxns = await prisma.p2pTransfer.findMany({
-    where: {
-      toUserId: Number(session?.user?.id),
-    },
-  });
-
-  return receivedTxns.map((t) => ({
-    time: t.timestamp,
-    amount: t.amount,
-    senderId: t.fromUserId,
-  }));
-};
-
-export default async function () {
-  const balance = await getBalance();
-  const sentTransactions = await getSentP2pTransactions();
-  const receivedTransactions = await getReceivedP2pTransactions();
-  const allTransaction: {
+  const allTransactions: {
     time: Date;
     amount: number;
     senderId?: number;
     receiverId?: number;
-  }[] = [...sentTransactions, ...receivedTransactions].sort(
-    (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
-  );
+  }[] = transactions.map((t) => ({
+    time: t.timestamp,
+    amount: t.amount,
+    // if fromId = user then it is a received txn
+    senderId: t.fromUserId === userId ? undefined : t.fromUserId,
+    // if toUserid = user then it is a sent txn
+    receiverId: t.toUserId === userId ? undefined : t.toUserId,
+  }));
+
+  return allTransactions;
+};
+
+export default async function () {
+  const balance = await getBalance();
+
+  const allTransactions = await getAllP2pTransactions();
   return (
     <div className="w-screen">
       <div className="text-4xl text-[#6a51a6] pt-8 mb-8 font-bold">
@@ -78,7 +64,7 @@ export default async function () {
         <div>
           <BalanceCard amount={balance.amount} locked={balance.locked} />
           <div className="pt-4">
-            <P2pTransactionsCard transactions={allTransaction} />
+            <P2pTransactionsCard transactions={allTransactions} />
           </div>
         </div>
       </div>
