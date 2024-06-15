@@ -5,6 +5,7 @@ import { authOptions } from "../../lib/auth";
 import prisma from "@repo/db/client";
 import { P2pTransactionsCard } from "../../../components/P2pTransactionsCard";
 import { timeStamp } from "console";
+import { RedirectPageButton } from "../../../components/RedirectPageButton";
 
 const getBalance = async () => {
   const session = await getServerSession(authOptions);
@@ -72,8 +73,14 @@ export default async function () {
             amount={balance.amount}
             locked={balance.locked}
           />
-          <div className="pt-4">
+          <div className="pt-4 ">
             <P2pTransactionsCard transactions={allTransactions} />
+            <div className="flex justify-end">
+              <RedirectPageButton
+                btname="All Transactions"
+                location={"/transactions"}
+              />
+            </div>
           </div>
         </div>
       </div>
