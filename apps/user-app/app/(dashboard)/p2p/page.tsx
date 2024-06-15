@@ -45,7 +45,12 @@ const getAllP2pTransactions = async () => {
     receiverId: t.toUserId === userId ? undefined : t.toUserId,
   }));
 
-  return allTransactions;
+  // TODO: add pagination!!
+  //sorted in a mannor where most recent transaction is on top
+  return allTransactions.sort(
+    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+  );
+  // .slice(0, 5);
 };
 
 export default async function () {
@@ -62,7 +67,11 @@ export default async function () {
           <SendMoneyCard />
         </div>
         <div>
-          <BalanceCard amount={balance.amount} locked={balance.locked} />
+          <BalanceCard
+            page={"p2p"}
+            amount={balance.amount}
+            locked={balance.locked}
+          />
           <div className="pt-4">
             <P2pTransactionsCard transactions={allTransactions} />
           </div>

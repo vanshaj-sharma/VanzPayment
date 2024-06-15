@@ -4,7 +4,11 @@ import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
 import { TextInput } from "@repo/ui/textinput";
 import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 export const SendMoneyCard = () => {
+  const router = useRouter();
   const [phoneno, setPhoneno] = useState("");
   const [amount, setAmount] = useState("");
   return (
@@ -29,6 +33,7 @@ export const SendMoneyCard = () => {
             <Button
               onClick={async () => {
                 await p2pTransfer(phoneno, Number(amount) * 100);
+                router.refresh();
               }}
             >
               Send Money
