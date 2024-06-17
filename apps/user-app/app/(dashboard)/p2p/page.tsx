@@ -4,7 +4,6 @@ import { SendMoneyCard } from "../../../components/SendMoneyCard";
 import { authOptions } from "../../lib/auth";
 import prisma from "@repo/db/client";
 import { P2pTransactionsCard } from "../../../components/P2pTransactionsCard";
-import { timeStamp } from "console";
 import { RedirectPageButton } from "../../../components/RedirectPageButton";
 
 const getBalance = async () => {
@@ -36,16 +35,16 @@ const getAllP2pTransactions = async () => {
     id: number;
     time: Date;
     amount: number;
-    senderId?: number;
-    receiverId?: number;
+    senderId?: number | null;
+    receiverId?: number | null;
   }[] = transactions.map((t) => ({
     id: t.id,
     time: t.timestamp,
     amount: t.amount,
     // if fromId = user then it is a received txn
-    senderId: t.fromUserId === userId ? undefined : t.fromUserId,
+    senderId: t.fromUserId === userId ? null : t.fromUserId,
     // if toUserid = user then it is a sent txn
-    receiverId: t.toUserId === userId ? undefined : t.toUserId,
+    receiverId: t.toUserId === userId ? null : t.toUserId,
   }));
 
   // TODO: add pagination!!

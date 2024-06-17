@@ -22,9 +22,7 @@ export const AddMoneyCard = () => {
     SUPPORTED_BANKS[0]?.redirectUrl
   );
   const [amount, setAmount] = useState(0);
-  const [provider, setProvider] = useState(
-    SUPPORTED_BANKS[0]?.redirectUrl || ""
-  );
+  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
   return (
     <Card title={"Amount"}>
       <div className="w-full">
@@ -43,7 +41,7 @@ export const AddMoneyCard = () => {
             SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
           );
           setProvider(
-            SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
+            SUPPORTED_BANKS.find((x) => x.name === value)?.name || ""
           );
         }}
         options={SUPPORTED_BANKS.map((bank) => ({

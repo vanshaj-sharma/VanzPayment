@@ -21,7 +21,7 @@ export const P2pTransactionsCard = ({
   return (
     <Card title="Recent P2P Transaction">
       {transactions.slice(0, 10).map((t) =>
-        t.senderId != undefined ? (
+        t.senderId != null ? (
           // received money here
           <div key={t.id} className="flex justify-between text-green-600 pb-1">
             <div>
