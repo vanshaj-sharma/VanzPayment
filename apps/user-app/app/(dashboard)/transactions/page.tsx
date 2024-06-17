@@ -75,7 +75,6 @@ const getAllBankTransactions = async () => {
     provider: t.provider,
   }));
   // .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
-  //latest first
 };
 
 export default async function () {
@@ -84,6 +83,7 @@ export default async function () {
   const allTransactions = [...allBankTransactions, ...allP2pTransactions].sort(
     (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
   );
+  //latest first
 
   return (
     <div className="w-screen">
