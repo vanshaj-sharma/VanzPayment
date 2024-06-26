@@ -1,4 +1,8 @@
+"use client";
+//this component is client side because of dynamic fetching
 import { Card } from "@repo/ui/card";
+import { useSearchParams } from "next/navigation";
+import PaginationControls from "./PaginationComponent";
 
 export const AllTransactionCard = ({
   transactions,
@@ -21,15 +25,32 @@ export const AllTransactionCard = ({
     );
   }
 
+  //pagination is not super filter able, ie no date search
+  //only added basic paginaiton move left right
+
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") ?? "1";
+  const per_page = searchParams.get("per_page") ?? "5";
+  const start = (Number(page) - 1) * Number(per_page);
+  const end = start + Number(per_page);
+  console.log(end < transactions.length);
+
   return (
     <Card title={"All Transactions:"}>
-      {transactions.map((transaction) =>
-        transaction.provider === undefined ? (
-          <P2p t={transaction} />
-        ) : (
-          <BankTransaction t={transaction} />
-        )
-      )}
+      {transactions
+        .slice(start, end)
+        .map((transaction) =>
+          transaction.provider === undefined ? (
+            <P2p t={transaction} />
+          ) : (
+            <BankTransaction t={transaction} />
+          )
+        )}
+
+      <PaginationControls
+        hasNextPage={end < transactions.length}
+        hasPrevPage={start > 0}
+      />
     </Card>
   );
 };
