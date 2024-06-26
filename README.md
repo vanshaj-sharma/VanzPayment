@@ -2,7 +2,7 @@
 
 1. Add pagination
    -> at transfers page
-   -> at transactions page
+   -> at transactions page (completed)
 2. Make a better way to handle p2p and onRamp on Transaction's page.tsx
    -> can be done with out calling db twice,
    -> make a single array where all transactions are present
