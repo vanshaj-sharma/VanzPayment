@@ -34,7 +34,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
         Prev Page
       </Button>
 
-      <div>
+      <div className="text-2xl text-slate-600 p-1">
         {page}/{Math.ceil(10 / Number(per_page))}
       </div>
 

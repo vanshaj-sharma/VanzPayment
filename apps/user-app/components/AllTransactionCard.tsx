@@ -30,7 +30,7 @@ export const AllTransactionCard = ({
 
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
-  const per_page = searchParams.get("per_page") ?? "5";
+  const per_page = searchParams.get("per_page") ?? "10";
   const start = (Number(page) - 1) * Number(per_page);
   const end = start + Number(per_page);
   console.log(end < transactions.length);
@@ -46,11 +46,12 @@ export const AllTransactionCard = ({
             <BankTransaction t={transaction} />
           )
         )}
-
-      <PaginationControls
-        hasNextPage={end < transactions.length}
-        hasPrevPage={start > 0}
-      />
+      <div className="fixed bottom-0 right-0 pb-2 pr-2">
+        <PaginationControls
+          hasNextPage={end < transactions.length}
+          hasPrevPage={start > 0}
+        />
+      </div>
     </Card>
   );
 };
