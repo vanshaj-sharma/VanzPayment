@@ -8,6 +8,7 @@
    -> make a single array where all transactions are present
 3. Try adding zod validation
 4. making a dashboard page
+5. Bug -> can send money to your self (#important)
 
 # Turborepo starter
 
