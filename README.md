@@ -1,12 +1,13 @@
 # Todos :
 
-1. Add pagination
-   -> at transfers page
+1. Add pagination (completed , tbd)
+   -> at transfers page (dont'need)
    -> at transactions page (completed)
 2. Make a better way to handle p2p and onRamp on Transaction's page.tsx
-   -> can be done with out calling db twice,
+   -> can be done with out calling db twice,y
    -> make a single array where all transactions are present
 3. Try adding zod validation
+4. making a dashboard page
 
 # Turborepo starter
 
