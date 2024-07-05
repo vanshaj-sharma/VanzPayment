@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 const getAllP2pTransactions = async () => {
   const session = await getServerSession(authOptions);
   const userId = Number(session?.user?.id);
+
   const transactions = await prisma.p2pTransfer.findMany({
     where: {
       OR: [{ fromUserId: userId }, { toUserId: userId }],
@@ -36,11 +37,21 @@ const getAllP2pTransactions = async () => {
 
 export default async function () {
   const allTransactions = await getAllP2pTransactions();
+  const session = await getServerSession(authOptions);
+  const userId = Number(session?.user?.id);
+  const userName = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    select: {
+      name: true,
+    },
+  });
 
   return (
     <div className="w-scree">
       <div className="text-4xl text-[#6a51a6] pt-8 mb-8 font-bold">
-        Hello User!
+        {`Hello ${!userName ? "User" : userName.name}!`}
       </div>
       <div>
         {/* graph here */}

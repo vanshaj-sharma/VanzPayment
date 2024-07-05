@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import "chart.js/auto";
-
+//TODO: Add bar chart, ask someone
 //special way to import Line from react chart.js 2
 const Line = dynamic(
   () => import("react-chartjs-2").then((module) => module.Line),
@@ -67,7 +67,7 @@ const GraphComponent = ({
             title: {
               display: true,
               align: "start",
-              text: "All Transactions Done",
+              text: "All Transactions Done Using Vanzz Payment App:",
               color: "#6a51a6",
               font: {
                 size: 20,
