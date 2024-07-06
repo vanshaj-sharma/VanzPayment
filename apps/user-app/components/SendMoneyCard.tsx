@@ -7,10 +7,27 @@ import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
+import { toast } from "react-toastify";
 export const SendMoneyCard = () => {
   const router = useRouter();
   const [phoneno, setPhoneno] = useState("");
   const [amount, setAmount] = useState("");
+
+  const displayText = ({
+    okay,
+    message,
+  }: {
+    okay: boolean;
+    message?: string;
+  }) => {
+    if (!okay) {
+      toast.error(message);
+    } else {
+      toast.success("Transaction complete!", {
+        position: "top-right",
+      });
+    }
+  };
   return (
     <div className="h-[90vh]">
       <Card title={"Amount"}>
@@ -32,8 +49,14 @@ export const SendMoneyCard = () => {
           <div className="flex justify-center pt-4">
             <Button
               onClick={async () => {
-                await p2pTransfer(phoneno, Number(amount) * 100);
+                const details = await p2pTransfer(
+                  phoneno,
+                  Number(amount) * 100
+                );
+                //add here
                 router.refresh();
+                // @ts-ignore
+                displayText(details);
               }}
             >
               Send Money
